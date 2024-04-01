@@ -271,8 +271,6 @@ def download_models():
 
 download_models()
 
-print("\n-------------------------------\nIlaria RVC\n-------------------------------\n")
-
 # Define the tts_and_convert function
 def tts_and_convert(ttsvoice, text, spk_item, vc_transform, f0_file, f0method, file_index1, file_index2, index_rate, filter_radius, resample_sr, rms_mix_rate, protect):
 
