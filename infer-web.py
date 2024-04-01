@@ -238,7 +238,40 @@ def change_choices():
         "choices": sorted(audios), "__type__": "update"
     }
 
+def download_models():
+    # Create directories if they don't exist
+    if not os.path.exists('assets/hubert'):
+        os.makedirs('assets/hubert')
+    if not os.path.exists('assets/rmvpe'):
+        os.makedirs('assets/rmvpe')
+    
+    # Download hubert base model if not present
+    hubert_path = 'assets/hubert/hubert_base.pt'
+    if not os.path.isfile(hubert_path):
+        response = requests.get('https://huggingface.co/lj1995/VoiceConversionWebUI/resolve/main/hubert_base.pt')
 
+        if response.status_code == 200:
+            with open(hubert_path, 'wb') as f:
+                f.write(response.content)
+            print("Downloaded hubert base model file successfully. File saved to", hubert_path)
+        else:
+            raise Exception("Failed to download hubert base model file. Status code: " + str(response.status_code) + ".")
+        
+    # Download rmvpe model if not present
+    rmvpe_path = 'assets/rmvpe/rmvpe.pt'
+    if not os.path.isfile(rmvpe_path):
+        response = requests.get('https://huggingface.co/lj1995/VoiceConversionWebUI/resolve/main/rmvpe.pt')
+
+        if response.status_code == 200:
+            with open(rmvpe_path, 'wb') as f:
+                f.write(response.content)
+            print("Downloaded rmvpe model file successfully. File saved to", rmvpe_path)
+        else:
+            raise Exception("Failed to download rmvpe model file. Status code: " + str(response.status_code) + ".")
+
+download_models()
+
+print("\n-------------------------------\nIlaria RVC\n-------------------------------\n")
 
 # Define the tts_and_convert function
 def tts_and_convert(ttsvoice, text, spk_item, vc_transform, f0_file, f0method, file_index1, file_index2, index_rate, filter_radius, resample_sr, rms_mix_rate, protect):
