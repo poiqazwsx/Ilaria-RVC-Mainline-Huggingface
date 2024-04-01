@@ -1379,9 +1379,5 @@ with gr.Blocks(title="Ilaria RVC 💖") as app:
     if config.iscolab:
         app.queue(concurrency_count=511, max_size=1022).launch(share=True)
     else:
-        app.queue(concurrency_count=511, max_size=1022).launch(
-            server_name="0.0.0.0",
-            inbrowser=not config.noautoopen,
-            server_port=config.listen_port,
-            quiet=True,
+        app.queue(concurrency_count=1, max_size=20).launch(share=False
         )
