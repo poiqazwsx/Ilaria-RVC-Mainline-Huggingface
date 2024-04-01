@@ -175,41 +175,7 @@ audio_paths  = [os.path.join(root, name)
                for root, _, files in os.walk(audio_root, topdown=False) 
                for name in files
                if name.endswith(tuple(sup_audioext))]
-def get_pretrained_files(directory, keyword, filter_str):
-    file_paths = {}
-    for filename in os.listdir(directory):
-        if filename.endswith(".pth") and keyword in filename and filter_str in filename:
-            file_paths[filename] = os.path.join(directory, filename)
-    return file_paths
 
-pretrained_directory = "assets/pretrained_v2"
-pretrained_path = {filename: os.path.join(pretrained_directory, filename) for filename in os.listdir(pretrained_directory)}
-pretrained_G_files = get_pretrained_files(pretrained_directory, "G", "f0")
-pretrained_D_files = get_pretrained_files(pretrained_directory, "D", "f0")
-
-def get_pretrained_models(path_str, f0_str, sr2):
-    sr_mapping = {
-        "32k": f"{f0_str}G32k.pth",
-        "40k": f"{f0_str}G40k.pth",
-        "48k": f"{f0_str}G48k.pth",
-        "OV2-32k": f"{f0_str}OV2-32k_G.pth",
-        "OV2-40k": f"{f0_str}OV2-40k_G.pth",
-        "RIN-40k": f"{f0_str}RIN-40k_G.pth",
-        "Snowie-40k": f"{f0_str}Snowie-40k_G.pth",
-        "Snowie-48k": f"{f0_str}Snowie-48k_G.pth",
-        "SnowieV3.1-40k": f"{f0_str}SnowieV3.1-40k_G.pth", 
-        "SnowieV3.1-32k": f"{f0_str}SnowieV3.1-32k_G.pth",
-        "SnowieV3.1-48k": f"{f0_str}SnowieV3.1-48k_G.pth",
-        "SnowieV3.1-RinE3-40K": f"{f0_str}SnowieV3.1-X-RinE3-40k_G.pth"
-    }
-
-    pretrained_G_filename = sr_mapping.get(sr2, "")
-    pretrained_D_filename = pretrained_G_filename.replace("G", "D")
-
-    if not pretrained_G_filename or not pretrained_D_filename:
-        logging.warning(f"Pretrained models not found for sample rate {sr2}, will not use pretrained models")
-
-    return os.path.join(pretrained_directory, pretrained_G_filename), os.path.join(pretrained_directory, pretrained_D_filename)
 
 names = []
 for name in os.listdir(weight_root):
