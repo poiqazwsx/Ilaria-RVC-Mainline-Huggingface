@@ -244,7 +244,8 @@ def download_models():
         os.makedirs('assets/hubert')
     if not os.path.exists('assets/rmvpe'):
         os.makedirs('assets/rmvpe')
-    
+    if not os.path.exists('videos'):
+        os.makedirs('videos')
     # Download hubert base model if not present
     hubert_path = 'assets/hubert/hubert_base.pt'
     if not os.path.isfile(hubert_path):
