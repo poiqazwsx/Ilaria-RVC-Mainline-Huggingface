@@ -347,7 +347,7 @@ def clean():
 
 
 sr_dict = {
-    "32k": 32000, "40k": 40000, "48k": 48000, "OV2-32k": 32000, "OV2-40k": 40000, "RIN-40k": 40000, "Snowie-40k": 40000, "Snowie-48k": 48000, "SnowieV3.1-40k": 40000, "SnowieV3.1-32k": 32000, "SnowieV3.1-48k": 48000, "SnowieV3.1-RinE3-40K": 40000,
+    "32k": 32000, "40k": 40000, "48k": 48000, "OV2-32k": 32000, "OV2-40k": 40000, "RIN-40k": 40000, "Snowie-40k": 40000, "Snowie-48k": 48000, "SnowieV3.1-40k": 40000, "SnowieV3.1-32k": 32000, "SnowieV3.1-48k": 48000, "SnowieV3.1-RinE3-40K": 40000, "Italia-32k": 32000,
 }
 
 def durations(sample_rate, model_options, qualities, duration):
@@ -654,7 +654,7 @@ def change_version19(sr2, if_f0_3, version19):
     to_return_sr2 = (
         {"choices": ["32k","40k", "48k"], "__type__": "update", "value": sr2}
         if version19 == "v1"
-        else {"choices": ["32k", "40k", "48k", "OV2-32k", "OV2-40k", "RIN-40k","Snowie-40k","Snowie-48k"], "__type__": "update", "value": sr2}
+        else {"choices": ["32k", "40k", "48k", "OV2-32k", "OV2-40k", "RIN-40k","Snowie-40k","Snowie-48k", "Italia-32k"], "__type__": "update", "value": sr2}
     )
     f0_str = "f0" if if_f0_3 else ""
     return (
