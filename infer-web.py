@@ -15,6 +15,7 @@ import torch
 import numpy as np
 import gradio as gr
 import faiss
+import yt_dlp
 import fairseq
 import librosa
 import librosa.display
@@ -907,6 +908,23 @@ def change_f0_method(f0method8):
 vc_output1 = gr.Textbox(label=i18n("Console"))
 vc_output2 = gr.Audio(label=i18n("Audio output"))
 
+
+def download_audio(url, name_audio):
+    ydl_opts = {
+        'format': 'bestaudio/best',
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'wav',
+            'preferredquality': '192',
+        }],
+        'outtmpl': f'audios{name_audio}',
+    }
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
+    return "downlod audio succesfully!"
+
+
+
 with gr.Blocks(title="Ilaria RVC 💖") as app:
     gr.Markdown("<h1>  Ilaria RVC 💖   </h1>")
     gr.Markdown(value=i18n("Made with 💖 by Ilaria | Support her on [Ko-Fi](https://ko-fi.com/ilariaowo)"))
@@ -1323,7 +1341,19 @@ with gr.Blocks(title="Ilaria RVC 💖") as app:
                          inputs=[sid1, protect0, protect1],
                          outputs=[spk_item, protect0, protect1, file_index2, file_index4, modelload_out]
                         )
-                
+
+		with gr.Accordion('download audio acapella', open=False):
+                    with gr.Column():
+                        url = gr.Textbox(label="URL youtuube")
+                        audio_names = gr.Textbox(label="name audio")
+			output-tst = gr.Textbox(label="output text")
+			downloadbtn = gr.Button("download!")
+                        refresh_button.click(
+                         fn=download_audio,
+                            inputs=[url, audio_names],
+                            outputs=[output-tst],
+                            )
+                        
                         
                 with gr.Accordion('Audio Analyser', open=False):
                     with gr.Column():
@@ -1406,6 +1436,7 @@ with gr.Blocks(title="Ilaria RVC 💖") as app:
 		
 		- **RVC Project**: Original Developers
 		- **yumereborn**: Ilaria RVC image
+  		- **Blane187**: Youtube Audio Downloader 
                                 
                 ### **In loving memory of JLabDX** 🕊️
                 ''')
